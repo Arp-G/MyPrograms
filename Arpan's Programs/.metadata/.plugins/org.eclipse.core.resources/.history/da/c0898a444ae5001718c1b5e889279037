@@ -1,0 +1,90 @@
+package myPack;
+
+
+class Node<T>
+{
+	T value;
+	Node next,prev;
+	Node(T value)
+	{
+		this.value=value;
+		next=prev=null;
+	}
+
+}
+
+public class MyQueue
+{
+	Node Front,Rear,Head;
+	int Size,NodeCount;
+	
+	MyQueue(int Size)
+	{
+		Front=Rear=null;
+		NodeCount=0;
+		this.Size=Size;
+	}
+	
+	<T> void InsQueue(T obj)
+	{
+		if(NodeCount==Size)
+		{
+			System.out.println("Queue Overflow");	
+		}
+		else
+		{
+			Node<T> nd=new Node<T>(obj);
+			
+			if(Rear==null)
+			{
+				Front=Rear=Head=nd;
+				NodeCount++;
+			}
+			
+			Rear.prev=nd;
+			
+			nd.next=Rear;
+			
+			Rear=nd;
+			
+			NodeCount++;
+			
+		
+		displayQueue();
+		}
+	}
+	
+	void delqueue()
+	{
+		if(Front==null)
+		{
+			System.out.println("Queue Underflow");
+		}
+		else
+		{
+			Front=Front.prev;
+			
+			Front.next=null;
+			
+			NodeCount--;
+		}
+		
+		displayQueue();
+	}
+	
+	void displayQueue()
+	{
+		System.out.println();
+		System.out.println("Current Queue Status");
+		System.out.println("Number of Nodes : "+NodeCount);
+		System.out.println();
+		
+		Node temp=Rear;
+		while(temp!=null)
+		{
+			System.out.print(temp.value+" , ");
+			temp=temp.next;
+		}
+		System.out.println();
+	}
+}

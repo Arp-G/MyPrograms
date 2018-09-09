@@ -1,0 +1,71 @@
+package myPack;
+
+
+class Queue<T>
+{
+	T value;
+	Queue next;
+	Queue(T value)
+	{
+		this.value=value;
+		next=null;
+	}
+
+}
+
+public class MyQueue
+{
+	int Front,Rear,Size;
+	
+	MyQueue(int Size)
+	{
+		Front=Rear=-1;
+		this.Size=Size;
+	}
+	
+	void insqueue(Queue<T> obj)
+	{
+		if(Rear==Size)
+		{
+			System.out.println("Queue Overflow");	
+		}
+		else
+		{
+			Queue<T> node=new Queue<T>()
+			if(Front=-1) {Front++;}
+			Rear++;
+			Q[Rear]=obj;
+		}
+		
+		displayQueue();
+	}
+	
+	void delqueue(Queue<?> obj)
+	{
+		if(Front==-1)
+		{
+			System.out.println("Queue Underflow");
+		}
+		else
+		{
+			Front++;
+		}
+		
+		displayQueue();
+	}
+	
+	void displayQueue()
+	{
+		System.out.println();
+		System.out.println("Current Queue Status");
+		System.out.println();
+		
+		for(int i=Front;i<=Rear;i++)
+		{
+			System.out.print(Q[i]);
+		}
+		System.out.println();
+		System.out.println("Front ="+Fornt);
+		System.out.println("Rear ="+Rear);
+	}
+}

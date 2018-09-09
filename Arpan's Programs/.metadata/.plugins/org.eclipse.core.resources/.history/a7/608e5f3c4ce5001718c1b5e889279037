@@ -1,0 +1,133 @@
+package myPack;
+
+
+class Node<T>
+{
+	T value;
+	Node next,prev;
+	Node(T value)
+	{
+		this.value=value;
+		next=prev=null;
+	}
+
+}
+
+public class MyQueue<T>
+{
+	Node Front,Rear,Head;
+	int Size,NodeCount;
+	
+	MyQueue(int Size)
+	{
+		Front=Rear=null;
+		NodeCount=0;
+		this.Size=Size;
+	}
+	
+	<T> void InsQueue(T obj)
+	{
+		if(NodeCount==Size)
+		{
+			System.out.println("Queue Overflow");	
+		}
+		else
+		{
+			Node<T> nd=new Node<T>(obj);
+			
+			if(Rear==null)
+			{
+				Front=Rear=Head=nd;
+				NodeCount++;
+			}
+			
+			Rear.prev=nd;
+			
+			nd.next=Rear;
+			
+			Rear=nd;
+			
+			NodeCount++;
+			
+		
+		displayQueue();
+		}
+	}
+	
+	void delqueue()
+	{
+		if(Front==null)
+		{
+			System.out.println("Queue Underflow");
+		}
+		else
+		{
+			Front=Front.prev;
+			
+			Front.next=null;
+			
+			NodeCount--;
+		}
+		
+		displayQueue();
+	}
+	
+	void displayQueue()
+	{
+		System.out.println();
+		System.out.println("Current Queue Status");
+		System.out.println("Number of Nodes : "+NodeCount);
+		System.out.println();
+		
+		Node temp=Rear;
+		while(temp!=null)
+		{
+			System.out.print(temp.value+" , ");
+			temp=temp.next;
+		}
+		System.out.println();
+	}
+	
+	public static void main(String args[])
+	{
+		int size,ch=0;
+		size=10;
+		
+		while(ch==0)
+		{
+			switch(ch)
+			{
+			case 1:
+				MyQueue<Integer> Q=new MyQueue<Integer>(size);
+				break;
+			
+			case 2:
+				MyQueue<Boolean> Q=new MyQueue<Boolean>(size);
+				break;
+			
+			case 3:
+				MyQueue<Double> Q=new MyQueue<Double>(size);
+				break;
+			
+			case 4:
+				MyQueue<String> Q=new MyQueue<String>(size);
+				break;
+			
+			default:
+			{
+				System.out.println("Wrong choice ... Enter choice again ");	
+				ch=0;
+			}
+		
+		   }
+		}
+		
+	}
+			
+			
+		
+	
+	
+	
+	
+

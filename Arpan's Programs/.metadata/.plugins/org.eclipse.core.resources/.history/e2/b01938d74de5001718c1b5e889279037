@@ -1,0 +1,148 @@
+package myPack;
+
+import java.util.Scanner;
+
+class Node<T>
+{
+	T value;
+	Node next,prev;
+	Node(T value)
+	{
+		this.value=value;
+		next=prev=null;
+	}
+
+}
+
+public class MyQueue<T>
+{
+	Node Front,Rear,Head;
+	int Size,NodeCount;
+	
+	MyQueue(int Size)
+	{
+		Front=Rear=null;
+		NodeCount=0;
+		this.Size=Size;
+		
+		System.out.println("Queue Created of Size "+Size+"  and type :  "+this.getClass().getName());
+	}
+	
+	<T> void InsQueue(T obj)
+	{
+		if(NodeCount==Size)
+		{
+			System.out.println("Queue Overflow");	
+		}
+		else
+		{
+			Node<T> nd=new Node<T>(obj);
+			
+			if(Rear==null)
+			{
+				Front=Rear=Head=nd;
+				NodeCount++;
+			}
+			
+			Rear.prev=nd;
+			
+			nd.next=Rear;
+			
+			Rear=nd;
+			
+			NodeCount++;
+			
+		
+		displayQueue();
+		}
+	}
+	
+	void delqueue()
+	{
+		if(Front==null)
+		{
+			System.out.println("Queue Underflow");
+		}
+		else
+		{
+			Front=Front.prev;
+			
+			Front.next=null;
+			
+			NodeCount--;
+		}
+		
+		displayQueue();
+	}
+	
+	void displayQueue()
+	{
+		System.out.println();
+		System.out.println("Current Queue Status");
+		System.out.println("Number of Nodes : "+NodeCount);
+		System.out.println();
+		
+		Node temp=Rear;
+		while(temp!=null)
+		{
+			System.out.print(temp.value+" , ");
+			temp=temp.next;
+		}
+		System.out.println();
+	}
+	
+	public static void main(String args[])
+	{
+		int size,ch=0;
+		size=10;
+		
+		Scanner sc=new Scanner(System.in);
+		
+		System.out.println("Queue Menu :");
+		System.out.println("--------------------------");
+		System.out.println("Choose 1 for Integer Queue");
+		System.out.println("Choose 2 for Boolean Queue");
+		System.out.println("Choose 3 for Double Queue");
+		System.out.println("Choose 4 for String Queue");
+		ch=sc.nextInt();
+		
+		while(ch==0)
+		{
+			switch(ch)
+			{
+			case 1:
+				MyQueue<Integer> IQ=new MyQueue<Integer>(size);
+				System.out.println("Integer Queue");
+				break;
+			
+			case 2:
+				MyQueue<Boolean> BQ=new MyQueue<Boolean>(size);
+				break;
+			
+			case 3:
+				MyQueue<Double> DQ=new MyQueue<Double>(size);
+				break;
+			
+			case 4:
+				MyQueue<String> SQ=new MyQueue<String>(size);
+				break;
+			
+			default:
+			{
+				System.out.println("Wrong choice ... Enter choice again ");	
+				ch=0;
+			}
+		
+		   }
+		}
+		
+	}
+}
+			
+			
+		
+	
+	
+	
+	
+
