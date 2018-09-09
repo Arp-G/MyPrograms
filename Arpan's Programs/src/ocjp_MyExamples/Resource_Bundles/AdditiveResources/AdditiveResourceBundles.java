@@ -1,3 +1,5 @@
+package ocjp_MyExamples.Resource_Bundles.AdditiveResources;
+
 import java.util.*;
 
 public class AdditiveResourceBundles 
