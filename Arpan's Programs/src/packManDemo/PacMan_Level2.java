@@ -18,7 +18,7 @@ class Enemy
 {
 	int x;
 	int y;
-	int scatter=999999999; //For Patrol Enemys
+	int scatter=999999999; // For Patrol Enemys
 	
 	String name;
 	
