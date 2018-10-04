@@ -119,6 +119,10 @@ public class PacMan_Level2 extends JPanel implements ActionListener,KeyListener
 		
 		enemyList.add(new Enemy(880,40,"Red",Color.RED,5,false));
 		
+		enemyList.add(new Enemy(40,640,"Blue",Color.BLUE,10,false));
+		
+		enemyList.add(new Enemy(480,360,"Black",Color.BLACK,8,false));
+		
 		enemyList.add(new PatrolEnemy(120,80,"Patrol Guard 1",Color.GREEN,false));
 		
 		enemyList.add(new PatrolEnemy(720,80,"Patrol Guard 2",Color.GREEN,false));
