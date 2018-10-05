@@ -10,10 +10,6 @@ import java.awt.geom.*;
 
 import javax.swing.*;
 
-import java.util.Collection;
-
-import java.util.ArrayDeque;
-
 import javax.sound.sampled.*;
 
 
@@ -21,6 +17,9 @@ import javax.sound.sampled.*;
 public class Pacman2player extends JPanel implements ActionListener,KeyListener
 {
 	
+	
+	private static final long serialVersionUID = 1L;
+
 	Timer t=new Timer(400,this); // Set a 400 ms timer
 	
 	int x=40,y=40,velx=40,vely=00;
@@ -57,7 +56,7 @@ public class Pacman2player extends JPanel implements ActionListener,KeyListener
 	Pacman2player()
 	{
 		try {
-		      File file = new File("pacman_beginning.wav");
+		      File file = new File("sounds/pacman_beginning.wav");
 		      AudioInputStream stream = AudioSystem.getAudioInputStream(file);
 		      Clip clip = AudioSystem.getClip();
 		      clip.open(stream);
@@ -96,8 +95,6 @@ public class Pacman2player extends JPanel implements ActionListener,KeyListener
 		makeMaze(g);
 		
 		 
-		 Ellipse2D pacman=new Ellipse2D.Double(x,y,40,40);
-		 
 		 Graphics2D g1=(Graphics2D)g;
 		 
 		 
@@ -117,10 +114,7 @@ public class Pacman2player extends JPanel implements ActionListener,KeyListener
 			
 			 flag=true;	 
 		 }	
-		 
-		 
-		 
-		 Ellipse2D pacman1=new Ellipse2D.Double(x,y,40,40);
+		 	
 		 
 		 Graphics2D g11=(Graphics2D)g;
 		 
@@ -331,7 +325,7 @@ public class Pacman2player extends JPanel implements ActionListener,KeyListener
 			score++;
 			
 			try {
-			      File file = new File("pacman_chomp.wav");
+			      File file = new File("sounds/pacman_chomp.wav");
 			      AudioInputStream stream = AudioSystem.getAudioInputStream(file);
 			      Clip clip = AudioSystem.getClip();
 			      clip.open(stream);
@@ -357,7 +351,7 @@ public class Pacman2player extends JPanel implements ActionListener,KeyListener
 		}
 		
 		try {
-		      File file = new File("pacman_win.wav");
+		      File file = new File("sounds/pacman_win.wav");
 		      AudioInputStream stream = AudioSystem.getAudioInputStream(file);
 		      Clip clip = AudioSystem.getClip();
 		      clip.open(stream);
@@ -396,7 +390,7 @@ public class Pacman2player extends JPanel implements ActionListener,KeyListener
 		if(x==a && y==b)
 		{
 			try {
-			      File file = new File("pacman_lose.wav");
+			      File file = new File("sounds/pacman_lose.wav");
 			      AudioInputStream stream = AudioSystem.getAudioInputStream(file);
 			      Clip clip = AudioSystem.getClip();
 			      clip.open(stream);

@@ -60,7 +60,6 @@ public class PacMan extends JPanel implements ActionListener,KeyListener
 			this.animFlag=animflag;
 		}
 	}
-
 	
 	int ScatterCount=0;
 	
@@ -71,7 +70,7 @@ public class PacMan extends JPanel implements ActionListener,KeyListener
 	PacMan()
 	{
 		try {
-		      File file = new File("pacman_beginning.wav");
+		      File file = new File("sounds/pacman_beginning.wav");
 		      AudioInputStream stream = AudioSystem.getAudioInputStream(file);
 		      Clip clip = AudioSystem.getClip();
 		      clip.open(stream);
@@ -104,8 +103,7 @@ public class PacMan extends JPanel implements ActionListener,KeyListener
 		
 		enemyList.add(new Enemy(480,360,"Black",Color.BLACK,8,false));
 	}
-	
-	
+		
 	public static void main(String args[])
 	{
 		PacMan ob=new PacMan();
@@ -209,10 +207,7 @@ public class PacMan extends JPanel implements ActionListener,KeyListener
 		
 		
 	}
-	
-
-	
-	
+		
 	public void makeMaze(Graphics g)
 	{	
 		boolean flag=true;
@@ -264,8 +259,7 @@ public class PacMan extends JPanel implements ActionListener,KeyListener
 		ScatterCount++;
 		
 	}
-	
-	
+		
 	public void actionPerformed(ActionEvent e)
 	{
 		chkWin();
@@ -350,7 +344,7 @@ public class PacMan extends JPanel implements ActionListener,KeyListener
 			score++;
 			
 			try {
-			      File file = new File("pacman_chomp.wav");
+			      File file = new File("sounds/pacman_chomp.wav");
 			      AudioInputStream stream = AudioSystem.getAudioInputStream(file);
 			      Clip clip = AudioSystem.getClip();
 			      clip.open(stream);
@@ -376,7 +370,7 @@ public class PacMan extends JPanel implements ActionListener,KeyListener
 		}
 		
 		try {
-		      File file = new File("pacman_win.wav");
+		      File file = new File("sounds/pacman_win.wav");
 		      AudioInputStream stream = AudioSystem.getAudioInputStream(file);
 		      Clip clip = AudioSystem.getClip();
 		      clip.open(stream);
@@ -419,7 +413,7 @@ public class PacMan extends JPanel implements ActionListener,KeyListener
 			{
 				
 				try {
-						File file = new File("pacman_lose.wav");
+						File file = new File("sounds/pacman_lose.wav");
 						AudioInputStream stream = AudioSystem.getAudioInputStream(file);
 						Clip clip = AudioSystem.getClip();
 						clip.open(stream);
@@ -439,8 +433,7 @@ public class PacMan extends JPanel implements ActionListener,KeyListener
 			}
 		}
 	}
-	
-	
+		
 	public void up()
 	{
 		
@@ -507,16 +500,11 @@ public class PacMan extends JPanel implements ActionListener,KeyListener
 			right();
 		
 	}
-	
-	
+		
 	public void keyTyped(KeyEvent e) {}
 	
 	public void keyReleased(KeyEvent e) {}
 	
-	
-	
-	
-
 	public void mazeReady()
 	{
 
@@ -786,15 +774,7 @@ public class PacMan extends JPanel implements ActionListener,KeyListener
 		
 				
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		
 	Enemy followAI(Enemy tmp)
 	{
 		int a=tmp.x;
@@ -867,9 +847,6 @@ public class PacMan extends JPanel implements ActionListener,KeyListener
 		else
 			return new Enemy(a,b,tmp.name,tmp.color,tmp.scatter,true);
 	}
-	
-	
-
 
 }
 

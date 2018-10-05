@@ -92,7 +92,7 @@ public class PacMan_Level2 extends JPanel implements ActionListener,KeyListener
 	PacMan_Level2()
 	{
 		try {
-		      File file = new File("pacman_beginning.wav");
+		      File file = new File("sounds/pacman_beginning.wav");
 		      AudioInputStream stream = AudioSystem.getAudioInputStream(file);
 		      Clip clip = AudioSystem.getClip();
 		      clip.open(stream);
@@ -378,7 +378,7 @@ public class PacMan_Level2 extends JPanel implements ActionListener,KeyListener
 			score++;
 			
 			try {
-			      File file = new File("pacman_chomp.wav");
+			      File file = new File("sounds/pacman_chomp.wav");
 			      AudioInputStream stream = AudioSystem.getAudioInputStream(file);
 			      Clip clip = AudioSystem.getClip();
 			      clip.open(stream);
@@ -404,7 +404,7 @@ public class PacMan_Level2 extends JPanel implements ActionListener,KeyListener
 		}
 		
 		try {
-		      File file = new File("pacman_win.wav");
+		      File file = new File("sounds/pacman_win.wav");
 		      AudioInputStream stream = AudioSystem.getAudioInputStream(file);
 		      Clip clip = AudioSystem.getClip();
 		      clip.open(stream);
@@ -447,7 +447,7 @@ public class PacMan_Level2 extends JPanel implements ActionListener,KeyListener
 			{
 				
 				try {
-						File file = new File("pacman_lose.wav");
+						File file = new File("sounds/pacman_lose.wav");
 						AudioInputStream stream = AudioSystem.getAudioInputStream(file);
 						Clip clip = AudioSystem.getClip();
 						clip.open(stream);
