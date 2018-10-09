@@ -14,9 +14,10 @@ import java.util.Collections;
 
 import javax.sound.sampled.*;
 
+import java.beans.*;
 
 
-public class PacMan extends JPanel implements ActionListener,KeyListener
+public class PacMan_Level1 extends JPanel implements ActionListener,KeyListener
 {
 	private static final long serialVersionUID = 1L;
 	
@@ -32,32 +33,44 @@ public class PacMan extends JPanel implements ActionListener,KeyListener
 	
 	int count=0; // PacMan Mouth open for how long
 		
-	int maze[][]=new int[1000][800];
+	int maze[][]=new int[1500][1500];
 	
-	int score=0;
+	static int score=0;
+	
+	static int food=1;
 	
 	boolean LoseFlag=false;
+	
+	static JFrame frame;
+	
+	static PlayerData p;
+	
+	
+	static void control(PlayerData p)
+	{
+		score=p.score;
+		
+		display();
+	}
 	
 	class Enemy
 	{
 		int x;
 		int y;
-		int scatter;
+		int scatter;		
+		String name;		
+		String path;
+		String Direction;
+
 		
-		String name;
-		
-		Color color;
-		
-		boolean animFlag=false;
-		
-		Enemy(int x,int y,String name,Color color,int scatter,boolean animflag)
+		Enemy(int x,int y,String name,String path,String Direction,int scatter)
 		{
 			this.x=x;
 			this.y=y;
 			this.name=name;
-			this.color=color;
+			this.path=path;
+			this.Direction=Direction;
 			this.scatter=scatter;
-			this.animFlag=animflag;
 		}
 	}
 	
@@ -67,7 +80,7 @@ public class PacMan extends JPanel implements ActionListener,KeyListener
 
 	java.util.List<Enemy> enemyList=new java.util.ArrayList<>();
 
-	PacMan()
+	PacMan_Level1()
 	{
 		try {
 		      File file = new File("sounds/pacman_beginning.wav");
@@ -92,23 +105,23 @@ public class PacMan extends JPanel implements ActionListener,KeyListener
 		
 		setFocusTraversalKeysEnabled(false);
 		
-		//add Enemy's
+		//add Enemy's		
 		
+		enemyList.add(new Enemy(880,40,"Red","Red_ghost","_left",5));
 		
-		enemyList.add(new Enemy(880,40,"Red",Color.RED,5,false));
+		enemyList.add(new Enemy(880,640,"Green","Green_ghost","_right",7));
 		
-		enemyList.add(new Enemy(880,640,"Green",Color.GREEN,7,false));
+		enemyList.add(new Enemy(40,640,"Choclate","Choclate_ghost","_left",10));
 		
-		enemyList.add(new Enemy(40,640,"Blue",Color.BLUE,10,false));
+		enemyList.add(new Enemy(480,360,"Pink","Pink_ghost","_left",8));
 		
-		enemyList.add(new Enemy(480,360,"Black",Color.BLACK,8,false));
 	}
-		
-	public static void main(String args[])
+	
+	public static void display()
 	{
-		PacMan ob=new PacMan();
+		PacMan_Level1 ob=new PacMan_Level1();
 		
-		JFrame frame=new JFrame();
+		frame=new JFrame();
 		
 		frame.setResizable(false);
 		
@@ -121,7 +134,14 @@ public class PacMan extends JPanel implements ActionListener,KeyListener
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		frame.setTitle("PAC MAN");
-			
+	}
+	
+	
+		
+	public static void main(String args[])
+	{
+		p=new PlayerData("Test",java.time.LocalDateTime.now().toString());
+		display();			
 	}
 	
 	public void paintComponent(Graphics g)
@@ -137,29 +157,9 @@ public class PacMan extends JPanel implements ActionListener,KeyListener
 			for(int i=0;i<enemyList.size();i++)
 			{
 				Enemy tmp=enemyList.get(i);
-				
-				/*Ellipse2D enemy=new Ellipse2D.Double(tmp.x,tmp.y,40,40);
-		 
-				Graphics2D g1=(Graphics2D)g;
-		 
-				g1.setColor(tmp.color);
-		 
-				g1.fill(enemy);	*/
-				
-				if(tmp.animFlag)
-				{
-					((Graphics2D)g).setColor(tmp.color);
-				
-					g.fillArc(tmp.x,tmp.y,30,40,0,360);
-				}
-				else
-				{
-					((Graphics2D)g).setColor(tmp.color);
-					
-					g.fillArc(tmp.x,tmp.y,30,40,300,310);
-				}
-				
-		 	 
+	
+				g.drawImage(new ImageIcon("Images/"+tmp.path+tmp.Direction+".png").getImage(), tmp.x, tmp.y, null); //Draw enemys
+						 	 
 			}
 			
 			g.setColor(Color.decode("#FFFF00")); //Set pac man color
@@ -187,8 +187,6 @@ public class PacMan extends JPanel implements ActionListener,KeyListener
 		        g.setColor(Color.BLACK);
 		        
 		        s = "GAME OVER !";
-		        
-		        g.setColor(EatenBy.color);
 		        			
 		        g.drawString(s, 300, 300);
 		        
@@ -237,22 +235,31 @@ public class PacMan extends JPanel implements ActionListener,KeyListener
 					g1.fill(block);
 					
 				}
+
+				else if(maze[i][j]==3)
+					g.drawImage(new ImageIcon("Images/food1.png").getImage(), i, j, null); //Draw food
+					
+				else if(maze[i][j]==4)
+					g.drawImage(new ImageIcon("Images/food2.png").getImage(), i, j, null); //Draw food	
+					
+				else if(maze[i][j]==5)
+					g.drawImage(new ImageIcon("Images/food3.png").getImage(), i, j, null); //Draw food
+					
+				else if(maze[i][j]==6)
+					g.drawImage(new ImageIcon("Images/food4.png").getImage(), i, j, null); //Draw food
+					
+				else if(maze[i][j]==7)
+					g.drawImage(new ImageIcon("Images/food5.png").getImage(), i, j, null); //Draw food
+				
+				else if(maze[i][j]==8)
+					g.drawImage(new ImageIcon("Images/food6.png").getImage(), i, j, null); //Draw food
 				
 				
-				if(maze[i][j]==3)
-				{
-					Graphics2D g2=(Graphics2D)g;
-					
-					Ellipse2D food=new Ellipse2D.Double(i+10,j,20,20);
-					
-					g2.setColor(Color.MAGENTA);
-					
-					g2.fill(food);
-					 
+		
 				}
 				
 			}
-		}
+		
 		
 		drawScore((Graphics2D)g);
 		
@@ -261,11 +268,11 @@ public class PacMan extends JPanel implements ActionListener,KeyListener
 	}
 		
 	public void actionPerformed(ActionEvent e)
-	{
+	{		
 		chkWin();
 		
 		chkLose();
-		
+				
 		chkFood();
 		
 		repaint();
@@ -300,6 +307,7 @@ public class PacMan extends JPanel implements ActionListener,KeyListener
 			y=0;
 		
 		chkBarrier();	//Check if next tile is a barrier	
+		
 
 	}
 	
@@ -337,7 +345,7 @@ public class PacMan extends JPanel implements ActionListener,KeyListener
 	
 	void chkFood()
 	{
-		if(maze[x][y]==3)
+		if(maze[x][y]==3 || maze[x][y]==4 || maze[x][y]==5 || maze[x][y]==6 || maze[x][y]==7 || maze[x][y]==8)
 		{
 			maze[x][y]=1;
 			
@@ -358,13 +366,14 @@ public class PacMan extends JPanel implements ActionListener,KeyListener
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	void chkWin()
 	{
 		for(int i=0;i<1000;i++)
 		{
 			for(int j=0;j<800;j++)
 			{
-				if(maze[i][j]==3) //Food left
+				if(maze[i][j]==3 || maze[i][j]==4 || maze[i][j]==5 || maze[i][j]==6 || maze[i][j]==7 || maze[i][j]==8) //Food left
 					return;
 			}
 		}
@@ -379,7 +388,42 @@ public class PacMan extends JPanel implements ActionListener,KeyListener
 		      Thread.sleep(1000);
 		 
 		      stream.close();
-		 
+		      
+		      p.setScore(score);
+		      		      
+		      JDialog d = new JDialog(frame, "Continue ?", true); 
+		     
+		      d.setLayout( new FlowLayout() );
+		      
+		      JButton b = new JButton ("OK");  
+		        
+		        b.addActionListener ( new ActionListener()  
+		        {  
+		            public void actionPerformed( ActionEvent e )  
+		            {  
+		                d.setVisible(false); 
+		                frame.dispose();
+		                
+		                Thread t=new Thread() 
+			    		{
+			    			public void run()
+			    			{
+			    				StartingCountDown.control(p,2);
+			    			}
+			    		};
+			    		
+			    		t.start();
+		                
+		  		      	Thread.currentThread().stop();
+		            }  
+		        });
+		        
+		        d.add( new JLabel ("Continue to Next Level ?")); 
+		        d.setLocation(400,400);
+		        d.add(b);
+		        d.setSize(200,100);
+		        d.setVisible(true);  
+	 
 		    } catch (Exception ex) {
 		      System.out.println(ex.getMessage());
 		    }
@@ -388,6 +432,7 @@ public class PacMan extends JPanel implements ActionListener,KeyListener
 		
 	}
 	
+	@SuppressWarnings("deprecation")
 	void chkLose()
 	{
 		if(LoseFlag)
@@ -402,7 +447,10 @@ public class PacMan extends JPanel implements ActionListener,KeyListener
 	        }
 	        
 			
-			System.exit(1);
+			frame.dispose();
+			MainMenu.display();
+			
+			Thread.currentThread().stop(); // Stop the current thread;
 		}
 		
 		for(int i=0;i<enemyList.size();i++)
@@ -662,7 +710,7 @@ public class PacMan extends JPanel implements ActionListener,KeyListener
 				
 				
 				
-				//Top inverted T
+				//Bottom inverted T
 				
 				maze[480][560]=2;
 				maze[480][600]=2;
@@ -674,7 +722,7 @@ public class PacMan extends JPanel implements ActionListener,KeyListener
 				maze[560][520]=2;
 				maze[600][520]=2;
 				
-				//Top inverted T end
+				//Bottom inverted T end
 		
 		
 				//Top Inverted L
@@ -742,32 +790,38 @@ public class PacMan extends JPanel implements ActionListener,KeyListener
 				
 				//Food
 				
+				
+			maze[80][120]=3;	
 			
-			maze[80][200]=3;
+			maze[80][200]=5;
 				
 			maze[80][280]=3;			
 			
-			maze[80][480]=3;
+			maze[80][480]=8;
 			
-			maze[80][560]=3;
+			maze[80][560]=7;
+			
+			maze[80][640]=3;
 			
 			maze[880][640]=3;
+			
+			maze[880][120]=6;
 			
 			maze[880][200]=3;
 			
-			maze[880][280]=3;			
+			maze[880][280]=8;
 			
-			maze[880][480]=3;
+			maze[880][480]=4;
 			
-			maze[880][560]=3;
+			maze[880][560]=5;
 			
-			maze[880][640]=3;
+			maze[880][640]=8;
 			
-			maze[440][360]=3;
+			maze[440][360]=4;
 			
 			maze[480][360]=3;
 			
-			maze[520][360]=3;
+			maze[520][360]=7;
 			
 			//Food End
 								
@@ -781,6 +835,8 @@ public class PacMan extends JPanel implements ActionListener,KeyListener
 		
 		int b=tmp.y;
 		
+		String Direction;
+		
 		int x_dist=x-a;
 		
 		int y_dist=y-b;
@@ -793,18 +849,22 @@ public class PacMan extends JPanel implements ActionListener,KeyListener
 		if(Math.abs(x_dist)>Math.abs(y_dist) && x_dist>=0 && maze[a+40][b]!=2 && !Scatter) //Move right
 		{
 			 a=a+40;
+			 Direction="_right";
 		}
 		else if(Math.abs(x_dist)>Math.abs(y_dist) && x_dist<0 && maze[a-40][b]!=2 && !Scatter) //Move left
 		{
 			a=a-40;
+			Direction="_left";
 		}
 		else if(Math.abs(x_dist)<Math.abs(y_dist) && y_dist>=0 && maze[a][b+40]!=2 && !Scatter) //Move down
 		{
 			b=b+40;
+			Direction="_down";
 		}
 		else if(Math.abs(x_dist)<Math.abs(y_dist) && y_dist<0 && maze[a][b-40]!=2 && !Scatter) //Move up
 		{
 			b=b-40;	
+			Direction="_up";
 		}
 		else
 		{
@@ -812,40 +872,41 @@ public class PacMan extends JPanel implements ActionListener,KeyListener
 			class RandomMove
 			{
 				int p, q;
+				String Direction;
 				
-				RandomMove(int p,int q)
+				RandomMove(int p,int q,String Direction)
 				{
 					this.p=p;
 					this.q=q;
+					this.Direction=Direction;
 				}
 			}
 			
 			java.util.List<RandomMove> moveList=new java.util.ArrayList<>();
 			
 			if(maze[a+40][b]!=2)
-				moveList.add(new RandomMove(a+40,b));
+				moveList.add(new RandomMove(a+40,b,"_right"));
 			
 			if(maze[a-40][b]!=2)
-				moveList.add(new RandomMove(a-40,b));
+				moveList.add(new RandomMove(a-40,b,"_left"));
 			
 			if(maze[a][b+40]!=2)
-				moveList.add(new RandomMove(a,b+40));
+				moveList.add(new RandomMove(a,b+40,"_down"));
 			
 			if(maze[a][b-40]!=2)
-				moveList.add(new RandomMove(a,b-40));
+				moveList.add(new RandomMove(a,b-40,"_up"));
 			
 			Collections.shuffle(moveList); //Pick a random move and set it
 			
 			a=moveList.get(0).p;
 			
 			b=moveList.get(0).q;
-						
+			
+			Direction=moveList.get(0).Direction;
+					
 		}
-		
-		if(tmp.animFlag)
-			return new Enemy(a,b,tmp.name,tmp.color,tmp.scatter,false);
-		else
-			return new Enemy(a,b,tmp.name,tmp.color,tmp.scatter,true);
+			
+			return new Enemy(a,b,tmp.name,tmp.path,Direction,tmp.scatter);
 	}
 
 }
